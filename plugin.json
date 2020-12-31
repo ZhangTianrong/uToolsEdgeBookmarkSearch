@@ -3,6 +3,7 @@
     "pluginName": "Edge 小助手",
     "description": "Microsoft Edge 小助手",
     "author": "ztr",
+    "homepage": "https://github.com/ZhangTianrong/uToolsEdgeBookmarkSearch",
     "preload": "preload.js",
     "main": "index.html",
     "logo": "img/logo.png",
