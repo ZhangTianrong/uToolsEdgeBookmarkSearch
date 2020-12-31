@@ -21,24 +21,25 @@ function getEdgeBookmarks() {
   const bookmarksData = []
   try {
     const data = JSON.parse(fs.readFileSync(bookmarkPath, 'utf-8'))
-    const getUrlData = (item) => {
+    const getUrlData = (item, p) => {
       if (!item || !Array.isArray(item.children)) return
       item.children.forEach(c => {
         if (c.type === 'url') {
           bookmarksData.push({
+            search_path: p,
             search_info: c.name.toLowerCase() + pinyinUtil.getPinyin(c.name,splitter="",withtone=false),
             title: c.name,
             description: c.url,
             icon: path.join(__dirname, 'img/web.png')
           })
         } else if (c.type === 'folder') {
-          getUrlData(c)
+          getUrlData(c, p + c.name.toLowerCase() + pinyinUtil.getPinyin(c.name,splitter="",withtone=false) +  "\\")
         }
       })
     }
-    getUrlData(data.roots.bookmark_bar)
-    getUrlData(data.roots.other)
-    getUrlData(data.roots.synced)
+    getUrlData(data.roots.bookmark_bar, "bar\\")
+    getUrlData(data.roots.other, "other\\")
+    getUrlData(data.roots.synced, "synced\\")
   } catch (e) { }
   return bookmarksData
 }
@@ -73,8 +74,11 @@ window.exports = {
       },
       search: (action, searchWord, callbackSetList) => {
         if (!searchWord) return callbackSetList()
-        searchWord = searchWord.toLowerCase()
-        callbackSetList(bookmarksDataCache.filter(x => x.search_info.includes(searchWord)))
+        searchWordList = searchWord.toLowerCase().split(/:|：/)
+        if (searchWordList.length == 1)
+          callbackSetList(bookmarksDataCache.filter(x => x.search_info.includes(searchWordList[0])))
+        else
+          callbackSetList(bookmarksDataCache.filter(x => x.search_info.includes(searchWordList[1]) && x.search_path.includes(searchWordList[0])))
       },
       select: (action, itemData) => {
         window.utools.hideMainWindow()
