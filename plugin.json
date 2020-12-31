@@ -1,0 +1,49 @@
+{
+    "version": "0.0.1",
+    "pluginName": "Edge 小助手",
+    "description": "Microsoft Edge 小助手",
+    "author": "ztr",
+    "preload": "preload.js",
+    "main": "index.html",
+    "logo": "img/logo.png",
+    "features": [{
+            "platform": ["darwin", "win32"],
+            "code": "inprivate_mode",
+            "explain": "Edge InPrivate窗口打开当前URL",
+            "cmds": [{
+                "type": "window",
+                "match": {
+                    "app": ["Microsoft Edge.app","msedge.exe"]
+                },
+                "label": "InPrivate窗口打开"
+            }]
+        },
+        {
+            "platform": ["darwin", "win32"],
+            "code": "edge_bookmarks",
+            "explain": "Edge 书签搜索",
+            "cmds": [
+                "Edge BookMarks", "Edge 书签",
+                {
+                    "type": "window",
+                    "match": {
+                        "app": ["Microsoft Edge.app", "msedge.exe"]
+                    },
+                    "label": "Edge 书签搜索"
+                }
+            ]
+        },
+        {
+            "platform": "darwin",
+            "code": "opened_tabs",
+            "explain": "列出所有 Edge 浏览器已打开的标签页",
+            "cmds": [{
+                "type": "window",
+                "match": {
+                    "app": ["Microsoft Edge.app","msedge.exe"]
+                },
+                "label": "所有标签页"
+            }]
+        }
+    ]
+}
