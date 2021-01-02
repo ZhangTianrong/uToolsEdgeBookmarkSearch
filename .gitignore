@@ -1,4 +1,4 @@
 .gitignore
 js/execfile.js
 js/index_formatted.js
-Bookmarks
+Bookmarks.json
